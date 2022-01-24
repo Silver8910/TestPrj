@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="BAAuthMember">
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias alias="baauthMemberVO" type="ods.vo.BAAuthMemberVO"/>
+	
+	<select id="baauthMemberDAO.selectBAAuthMemberList" parameterClass="baauthMemberVO" resultClass="egovMap">
+		SELECT AuthMemberID, MemberTp, MemberID
+		    , MemberCd, MemberNm, GroupID
+		    , Rk, CustCd, ApUserID
+		    , ApDt, UpUserID, UpDt
+		FROM BAAuthMember
+		WHERE 1=1
+		
+		<isNotNull prepend="AND" property="AuthMemberID">
+			AuthMemberID = #AuthMemberID#
+		</isNotNull>
+		<isNotNull prepend="AND" property="MemberTp">
+			MemberTp = #MemberTp#
+		</isNotNull>
+		<isNotNull prepend="AND" property="MemberID">
+			MemberID = #MemberID#
+		</isNotNull>
+		<isNotNull prepend="AND" property="MemberCd">
+			MemberCd = #MemberCd#
+		</isNotNull>
+		<isNotNull prepend="AND" property="MemberNm">
+			MemberNm = #MemberNm#
+		</isNotNull>
+		<isNotNull prepend="AND" property="GroupID">
+			GroupID = #GroupID#
+		</isNotNull>
+		<isNotNull prepend="AND" property="CustCd">
+			CustCd = #CustCd#
+		</isNotNull>
+		
+		ORDER BY MemberTp, MemberNm
+	</select>
+	
+	<select id="baauthMemberDAO.selectBAAuthMember" parameterClass="baauthMemberVO" resultClass="egovMap">
+		SELECT AuthMemberID, MemberTp, MemberID
+		    , MemberCd, MemberNm, GroupID
+		    , Rk, CustCd, ApUserID
+		    , ApDt, UpUserID, UpDt
+		FROM BAAuthMember
+		WHERE AuthMemberID = #AuthMemberID#
+	</select>
+	
+	<select id="baauthMemberDAO.selectBAAuthMemberGroup" parameterClass="baauthMemberVO" resultClass="egovMap">
+		SELECT AuthMemberID, MemberTp, MemberID
+		    , MemberCd, MemberNm, GroupID
+		    , Rk, CustCd, ApUserID
+		    , ApDt, UpUserID, UpDt
+		FROM BAAuthMember
+		WHERE GroupID = #GroupID#
+	</select>
+	
+	<select id="baauthMemberDAO.selectGenAuthMemberID" resultClass="int">
+		SELECT ISNULL(MAX(AuthMemberID), 0) + 1 AuthMemberID FROM BAAuthMember
+	</select>
+	
+	<insert id="baauthMemberDAO.insertBAAuthMember" parameterClass="baauthMemberVO">
+		INSERT INTO BAAuthMember(AuthMemberID, MemberTp, MemberID
+		    , MemberCd, MemberNm, GroupID
+		    , Rk, CustCd, ApUserID
+		    , ApDt, UpUserID, UpDt)
+		VALUES(  #AuthMemberID#, #MemberTp#, #MemberID#
+		    , #MemberCd#, #MemberNm#, #GroupID#
+		    , #Rk#, #CustCd#, #ApUserID#
+		    , GETDATE(), #UpUserID#, GETDATE())
+	</insert>
+	
+	<update id="baauthMemberDAO.updateBAAuthMember" parameterClass="baauthMemberVO">
+		UPDATE BAAuthMember SET 
+			AuthMemberID=#AuthMemberID#, MemberTp=#MemberTp#, MemberID=#MemberID#
+		    , MemberCd=#MemberCd#, MemberNm=#MemberNm#, GroupID=#GroupID#
+		    , Rk=#Rk#, CustCd=#CustCd#
+		    , UpUserID=#UpUserID#, UpDt=GETDATE()
+		WHERE AuthMemberID=#AuthMemberID#
+	</update>
+	
+	<delete id="baauthMemberDAO.deleteBAAuthMember" parameterClass="baauthMemberVO">
+		DELETE FROM BAAuthMember WHERE AuthMemberID = #AuthMemberID#
+	</delete>
+</sqlMap>

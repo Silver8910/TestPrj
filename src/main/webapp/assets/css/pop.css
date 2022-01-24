@@ -1,0 +1,99 @@
+/*팝업*/
+.layer {position:fixed; left:0; right:0; top:0; bottom:0; z-index:100;}
+.layer._absolute {position:absolute;}
+.layer .dim {position:fixed; left:0; right:0; top:0; bottom:0; background:rgba(0, 0, 0, 0.8)}
+.pop-container {
+    padding:0 10px; z-index:1; position:absolute; left:50%; top:50%;width:680px;
+    -webkit-transform: translate(-50%, -50%);-moz-transform: translate(-50%, -50%);-ms-transform: translate(-50%, -50%);-o-transform: translate(-50%, -50%);transform: translate(-50%, -50%);
+}
+.pop-container._drag {
+    -webkit-transform: translate(0, 0);-moz-transform: translate(0, 0);-ms-transform: translate(0, 0);-o-transform: translate(0, 0);transform: translate(0, 0);
+}
+.pop-container._customPosition {
+    -webkit-transform: translate(0, 0);-moz-transform: translate(0, 0);-ms-transform: translate(0, 0);-o-transform: translate(0, 0);transform: translate(0, 0);
+}
+.pop-container._full {
+    top:10px; bottom:10px;
+    -webkit-transform: translate(-50%, 0);-moz-transform: translate(-50%, 0);-ms-transform: translate(-50%, 0);-o-transform: translate(-50%, 0);transform: translate(-50%, 0);
+}
+.pop-container._full .pop-content {overflow: hidden; overflow-y: auto;height:100%;}
+.pop-container .pop-content {background:#fff; padding:0 40px; position:relative}
+.pop-content .pop-header {position:relative; padding-top:35px; }
+.pop-content .pop-header .pop-tit {padding:20px 0;line-height:1.2; font-size:30px; color:#595959; border-bottom:1px solid #000;}
+.pop-content .pop-close {display:block; width:35px; height:35px;/*background:#fff; border-radius: 100%; */position:absolute; right:50px; top:50px; }
+.pop-content .pop-header .pop-close {right:0;}
+.pop-content .pop-close:after,
+.pop-content .pop-close:before {
+    content:""; display:block; background:#7C7C7C;; width:40px; height:2px; position:absolute; left:50%; top:50%;
+    -webkit-transform: translate(-50%, -50%) rotate(45deg);-moz-transform: translate(-50%, -50%) rotate(45deg);-ms-transform: translate(-50%, -50%) rotate(45deg);-o-transform: translate(-50%, -50%) rotate(45deg);transform: translate(-50%, -50%) rotate(45deg);
+}
+.pop-container .pop-close:before {
+    -webkit-transform: translate(-50%, -50%) rotate(-45deg);-moz-transform: translate(-50%, -50%) rotate(-45deg);-ms-transform: translate(-50%, -50%) rotate(-45deg);-o-transform: translate(-50%, -50%) rotate(-45deg);transform: translate(-50%, -50%) rotate(-45deg);
+}
+.pop-content .pop-inner {padding:30px 0 60px 0;}
+.pop-content .pop-body {background:#F8F8F8; border-radius: 8px; padding:60px 25px; word-break: break-word}
+.pop-content .pop-foot {text-align: center; padding-top:30px;}
+.pop-content .pop-foot .btn {width:250px;}
+
+.pop-choice {width:1110px;}
+.pop-content .tbl-container {padding-top:40px;}
+.pop-content .tbl-list {border-top:1px solid #B4C6D9; color:#747474; font-size:18px; text-align: left;}
+.pop-content .tbl-list th,
+.pop-content .tbl-list td {padding:20px 5px;border-bottom:1px solid #d9DEE3;}
+.pop-content .tbl-list thead th,
+.pop-content .tbl-list thead td {border-bottom:2px solid #B4C6D9;}
+.pop-content .tbl-list td {vertical-align: top; word-break: break-word}
+
+/* pop-contract*/
+.pop-contract {width:1200px;}
+.pop-contract .contract-container {padding:0;border:0;}
+.pop-contract .contract-container .row-flex {padding:10px 0;}
+.pop-contract .contract-container .btt-container {border-top: 1px solid #B4C6D9;margin-top:35px;}
+.pop-contract .contract-container .btt-container .row-flex {width:50%;border-bottom:0;}
+.pop-contract .info-container,
+.pop-contract .info-container .info-wrap {border:0;}
+.pop-contract .info-container .col-flex {justify-content: flex-end; padding:25px 40px;margin:0;align-items: center; vertical-align: middle}
+.pop-contract .info-container .col-flex .info-wrap {width:calc(100% - 85px); padding:0;padding-right:30px; text-align: right; }
+.pop-contract .info-container .col-flex .col-sign {width:85px;}
+.pop-contract .info-container .col-flex .col-sign img {width:100%;}
+.pop-contract .tbl-container {padding-top:0;}
+.pop-contract .tbl-container thead th {text-align: center;}
+.pop-contract .tbl-container .tip {text-align: right; margin:0; margin-top:45px;font-size: 22px;font-weight:700;color: #0055B8; width:100%; display:block;}
+.pop-contract .item-flex {vertical-align: top; align-items: flex-start; margin-top:45px;}
+.pop-contract .item-flex .col-img {width:200px;text-align: left;}
+.pop-contract .item-flex .col-dec {width:calc(100% - 200px); background:#FBFBFB; font-size:17px; padding:15px 30px;}
+.pop-contract .item-flex .col-img .stamp-item {margin:0;}
+.pop-contract .item-flex .col-img .tit {display:block; line-height:1.1; margin-top:10px;font-weight:700;font-size: 18px;color: #333;}
+.pop-contract .item-flex .col-dec dl dt {width:145px;color:#999; font-weight:500; }
+.pop-contract .item-flex .col-dec dl dd {width:calc(100% - 145px);color:#333; font-weight:700;}
+.pop-contract .btt-container .row-flex dt {width:200px;}
+.pop-contract .btt-container .row-flex dd {width:calc(100% - 200px); }
+
+.pop-contract .price-container {padding-top:25px; border-top:1px solid #B4C6D9; margin-top:25px;}
+.pop-contract .price-container .price-flex {margin-left:-25px; margin-right:-25px; vertical-align: top; align-items: flex-start}
+.pop-contract .price-container .price-flex .col-left,
+.pop-contract .price-container .price-flex .col-right {padding:0 25px;}
+.pop-contract .price-container .price-flex .col-left {width:370px;}
+.pop-contract .price-container .price-flex .col-right {width:calc(100% - 370px);}
+.pop-contract .price-container .price-flex .tbl {border-top: 2px solid #878787;}
+.pop-contract .price-container .price-flex .tbl thead th,
+.pop-contract .price-container .price-flex .tbl thead td {border-bottom: 1px solid #878787; font-size:18px;text-align: center; padding:15px}
+.pop-contract .price-container .price-flex .tbl.t1 thead th,
+.pop-contract .price-container .price-flex .tbl.t1 thead td {background: #F8F8F8;text-align: left; color:#999; border-right:0;}
+.pop-contract .price-container .price-flex .tbl.t1 thead td {color:#000}
+.pop-contract .price-container .price-flex .tbl.t1 td {text-align: right; padding-right:50px;}
+.pop-contract .price-container .price-flex .tbl tbody th,
+.pop-contract .price-container .price-flex .tbl tbody td {color:#999; font-size:17px; font-weight:700; border-bottom:1px solid #E2E2E2; padding:25px 15px;}
+.pop-contract .price-container .price-flex .tbl tbody th {text-align: left; padding-left:15px;border-right:0}
+.pop-contract .price-container .price-flex .tbl tbody td {font-weight:700; color:#333;}
+.pop-contract .price-container .price-flex .tbl thead th:last-child,
+.pop-contract .price-container .price-flex .tbl tbody td:last-child {border-right:0;}
+.pop-contract .tot-wrap {border-top:1px solid #878787;background: #F7F7F7;padding:20px 30px; color:#423F3F; font-size:17px; font-weight:700; text-align: right; margin-top:35px;}
+.pop-contract .tot-wrap dl,
+.pop-contract .tot-wrap dl dt,
+.pop-contract .tot-wrap dl dd {display:inline-block}
+.pop-contract .tot-wrap dl dd {width:200px;}
+.pop-contract .btn-right {padding-top:30px;}
+.pop-contract .btn-right .btn {width:170px;}
+
+.pop-contract .contract-container .dl-wrap:not(.t2) .row-flex:last-child {border-bottom:1px dashed #CFCFCF}

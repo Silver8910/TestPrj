@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="BACmpy">
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias alias="bacmpyVO" type="ods.vo.BACmpyVO"/>
+	
+	<select id="bacmpyDAO.selectBACmpyList" parameterClass="bacmpyVO" resultClass="egovMap">
+		SELECT CustCd, CustNm, BizRegNo
+		     , CmpyApNo, ReprHrNm, ReprTelNo
+		     , PostCd, Addr, Addr2
+		     , CBTYN, Remark, UseYN
+		     , StampImg, SignImg, ApUserID
+		     , ApDt, UpUserID, UpDt
+		  FROM BACmpy 
+		 WHERE 1=1
+		
+		<isNotNull prepend="AND" property="CustCd">
+			<![CDATA[
+				CustCd LIKE '%' + #CustCd# + '%'
+			]]>
+		</isNotNull>
+		<isNotNull prepend="AND" property="CustNm">
+			<![CDATA[
+				CustNm LIKE '%' + #CustNm# + '%'
+			]]>
+		</isNotNull>
+	</select>
+	
+	<select id="bacmpyDAO.selectBACmpy" parameterClass="bacmpyVO" resultClass="egovMap">
+		SELECT CustCd, CustNm, BizRegNo
+		     , CmpyApNo, ReprHrNm, ReprTelNo
+		     , PostCd, Addr, Addr2
+		     , CBTYN, Remark, UseYN
+		     , StampImg, SignImg, ApUserID
+		     , ApDt, UpUserID, UpDt
+		  FROM BACmpy 
+		 WHERE CustCd = #CustCd#
+	</select>
+	
+	<select id="bacmpyDAO.selectGenCustCd" resultClass="String">
+		SELECT RIGHT('1000001'+MAX(CAST(CustCd AS INT)), 6) CustCd FROM BACmpy
+	</select>
+	
+	<insert id="bacmpyDAO.insertBACmpy" parameterClass="bacmpyVO">
+		INSERT INTO BACmpy(CustCd, CustNm, BizRegNo
+		    , CmpyApNo, ReprHrNm, ReprTelNo
+		    , PostCd, Addr, Addr2
+		    , CBTYN, Remark, UseYN
+		    , StampImg, SignImg, ApUserID
+		    , ApDt, UpUserID, UpDt)
+		VALUES(  #CustCd#, #CustNm#, #BizRegNo#
+		    , #CmpyApNo#, #ReprHrNm#, #ReprTelNo#
+		    , #PostCd#, #Addr#, #Addr2#
+		    , #CBTYN#, #Remark#, #UseYN#
+		    , #StampImg#, #SignImg#, #ApUserID#
+		    , #ApDt#, #UpUserID#, #UpDt#)
+	</insert>
+	
+	<update id="bacmpyDAO.updateBACmpy" parameterClass="bacmpyVO">
+		UPDATE BACmpy SET 
+		      CustCd=#CustCd#, CustNm=#CustNm#, BizRegNo=#BizRegNo#
+		    , CmpyApNo=#CmpyApNo#, ReprHrNm=#ReprHrNm#, ReprTelNo=#ReprTelNo#
+		    , PostCd=#PostCd#, Addr=#Addr#, Addr2=#Addr2#
+		    , CBTYN=#CBTYN#, Remark=#Remark#, UseYN=#UseYN#
+		    , StampImg=#StampImg#, SignImg=#SignImg#
+		    , UpUserID=#UpUserID#, UpDt=#UpDt#
+		WHERE CustCd=#CustCd#
+	</update>
+	
+	<delete id="bacmpyDAO.deleteBACmpy" parameterClass="bacmpyVO">
+		DELETE FROM BACmpy WHERE CustCd = #CustCd#
+		DELETE FROM BAHr WHERE CustCd = #CustCd#
+		DELETE FROM BACertificate WHERE CustCd = #CustCd#
+	</delete>
+</sqlMap>

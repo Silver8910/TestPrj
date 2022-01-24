@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ods.mapper.BAAuthMemberMapper">
+
+	<select id="selectBAAuthMemberList" parameterType="baauthMemberVO" resultType="egovMap">
+		SELECT AuthMemberID, MemberTp, MemberID
+		    , MemberCd, MemberNm, GroupID
+		    , Rk, CustCd, ApUserID
+		    , ApDt, UpUserID, UpDt
+		FROM BAAuthMember
+		WHERE 1=1
+		
+		<if test="AuthMemberID != null and AuthMemberID != ''">
+			AND AuthMemberID = #{AuthMemberID}
+		</if>
+		<if test="MemberTp != null and MemberTp != ''">
+			AND MemberTp = #{MemberTp}
+		</if>
+		<if test="MemberID != null and MemberID != ''">
+			AND MemberID = #{MemberID}
+		</if>
+		<if test="MemberCd != null and MemberCd != ''">
+			AND MemberCd = #{MemberCd}
+		</if>
+		<if test="MemberNm != null and MemberNm != ''">
+			AND MemberNm = #{MemberNm}
+		</if>
+		<if test="GroupID != null and GroupID != ''">
+			AND GroupID = #{GroupID}
+		</if>
+		<if test="CustCd != null and CustCd != ''">
+			AND CustCd = #{CustCd}
+		</if>
+		
+		ORDER BY MemberTp, MemberNm
+	</select>
+	
+	<select id="selectBAAuthMember" parameterType="baauthMemberVO" resultType="egovMap">
+		SELECT AuthMemberID, MemberTp, MemberID
+		    , MemberCd, MemberNm, GroupID
+		    , Rk, CustCd, ApUserID
+		    , ApDt, UpUserID, UpDt
+		FROM BAAuthMember
+		WHERE AuthMemberID = #{AuthMemberID}
+	</select>
+	
+	<select id="selectBAAuthMemberGroup" parameterType="baauthMemberVO" resultType="egovMap">
+		SELECT AuthMemberID, MemberTp, MemberID
+		    , MemberCd, MemberNm, GroupID
+		    , Rk, CustCd, ApUserID
+		    , ApDt, UpUserID, UpDt
+		FROM BAAuthMember
+		WHERE GroupID = #{GroupID}
+	</select>
+	
+	<select id="selectGenAuthMemberID" resultType="int">
+		SELECT ISNULL(MAX(AuthMemberID), 0) + 1 AuthMemberID FROM BAAuthMember
+	</select>
+	
+	<insert id="insertBAAuthMember" parameterType="baauthMemberVO">
+		INSERT INTO BAAuthMember(AuthMemberID, MemberTp, MemberID
+		    , MemberCd, MemberNm, GroupID
+		    , Rk, CustCd, ApUserID
+		    , ApDt, UpUserID, UpDt)
+		VALUES(  #{AuthMemberID}, #{MemberTp}, #{MemberID}
+		    , #{MemberCd}, #{MemberNm}, #{GroupID}
+		    , #{Rk}, #{CustCd}, #{ApUserID}
+		    , GETDATE(), #{UpUserID}, GETDATE())
+	</insert>
+	
+	<update id="updateBAAuthMember" parameterType="baauthMemberVO">
+		UPDATE BAAuthMember SET 
+			AuthMemberID=#{AuthMemberID}, MemberTp=#{MemberTp}, MemberID=#{MemberID}
+		    , MemberCd=#{MemberCd}, MemberNm=#{MemberNm}, GroupID=#{GroupID}
+		    , Rk=#{Rk}, CustCd=#{CustCd}
+		    , UpUserID=#{UpUserID}, UpDt=GETDATE()
+		WHERE AuthMemberID=#{AuthMemberID}
+	</update>
+	
+	<delete id="deleteBAAuthMember" parameterType="baauthMemberVO">
+		DELETE FROM BAAuthMember WHERE AuthMemberID = #{AuthMemberID}
+	</delete>
+</mapper>

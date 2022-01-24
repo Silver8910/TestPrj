@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ods.mapper.BAAuthGroupMapper">
+
+	<select id="selectBAAuthGroupList" parameterType="baauthGroupVO" resultType="egovMap">
+		SELECT GroupID, GroupNm, Rk
+		    , CustCd, ApUserID, ApDt
+		    , UpUserID, UpDt
+		 FROM BAAuthGroup 
+		WHERE CustCd = #{CustCd}
+		ORDER BY GroupNm
+	</select>
+	
+	<select id="selectBAAuthGroup" parameterType="baauthGroupVO" resultType="egovMap">
+		SELECT GroupID, GroupNm, Rk
+		    , CustCd, ApUserID, ApDt
+		    , UpUserID, UpDt
+		 FROM BAAuthGroup 
+		WHERE GroupID = #{GroupID}
+	</select>
+	
+	<select id="selectGenGroupID" resultType="int">
+		SELECT ISNULL(MAX(GroupID), 0) + 1 GroupID FROM BAAuthGroup
+	</select>
+	
+	<insert id="insertBAAuthGroup" parameterType="baauthGroupVO">
+		INSERT INTO BAAuthGroup(GroupID, GroupNm, Rk
+		    , CustCd, ApUserID, ApDt
+		    , UpUserID, UpDt)
+		VALUES(  #{GroupID}, #{GroupNm}, #{Rk}
+		    , #{CustCd}, #{ApUserID}, GETDATE()
+		    , #{UpUserID}, GETDATE())
+	</insert>
+	
+	<update id="updateBAAuthGroup" parameterType="baauthGroupVO">
+		UPDATE BAAuthGroup SET 
+			  GroupID=#{GroupID}, GroupNm=#{GroupNm}, Rk=#{Rk}
+		    , CustCd=#{CustCd}
+		    , UpUserID=#{UpUserID}, UpDt=GETDATE()
+		WHERE GroupID=#{GroupID}
+	</update>
+	<delete id="deleteBAAuthGroup" parameterType="baauthGroupVO">
+		DELETE FROM BAAuthGroup WHERE GroupID=#{GroupID}
+		DELETE FROM BAAuthMember WHERE GroupID=#{GroupID}
+	</delete>
+</mapper>

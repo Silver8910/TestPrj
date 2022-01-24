@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="BAAuthGroup">
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias alias="baauthGroupVO" type="ods.vo.BAAuthGroupVO"/>
+	
+	<select id="baauthGroupDAO.selectBAAuthGroupList" parameterClass="baauthGroupVO" resultClass="egovMap">
+		SELECT GroupID, GroupNm, Rk
+		    , CustCd, ApUserID, ApDt
+		    , UpUserID, UpDt
+		 FROM BAAuthGroup 
+		WHERE CustCd = #CustCd#
+		ORDER BY GroupNm
+	</select>
+	
+	<select id="baauthGroupDAO.selectBAAuthGroup" parameterClass="baauthGroupVO" resultClass="egovMap">
+		SELECT GroupID, GroupNm, Rk
+		    , CustCd, ApUserID, ApDt
+		    , UpUserID, UpDt
+		 FROM BAAuthGroup 
+		WHERE GroupID = #GroupID#
+	</select>
+	
+	<select id="baauthGroupDAO.selectGenGroupID" resultClass="int">
+		SELECT ISNULL(MAX(GroupID), 0) + 1 GroupID FROM BAAuthGroup
+	</select>
+	
+	<insert id="baauthGroupDAO.insertBAAuthGroup" parameterClass="baauthGroupVO">
+		INSERT INTO BAAuthGroup(GroupID, GroupNm, Rk
+		    , CustCd, ApUserID, ApDt
+		    , UpUserID, UpDt)
+		VALUES(  #GroupID#, #GroupNm#, #Rk#
+		    , #CustCd#, #ApUserID#, GETDATE()
+		    , #UpUserID#, GETDATE())
+	</insert>
+	
+	<update id="baauthGroupDAO.updateBAAuthGroup" parameterClass="baauthGroupVO">
+		UPDATE BAAuthGroup SET 
+			  GroupID=#GroupID#, GroupNm=#GroupNm#, Rk=#Rk#
+		    , CustCd=#CustCd#
+		    , UpUserID=#UpUserID#, UpDt=GETDATE()
+		WHERE GroupID=#GroupID#
+	</update>
+	
+	<delete id="baauthGroupDAO.deleteBAAuthGroup" parameterClass="baauthGroupVO">
+		DELETE FROM BAAuthGroup WHERE GroupID=#GroupID#
+		DELETE FROM BAAuthMember WHERE GroupID=#GroupID#
+	</delete>
+</sqlMap>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="BAHr">
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias alias="bahrVO" type="ods.vo.BAHrVO"/>
+	
+	<select id="bahrDAO.selectBAHListr" parameterClass="bahrVO" resultClass="egovMap">
+		SELECT HrCd, HrNm, UserTp
+		     , UserID, Pwd, UserKey
+		     , TelNo, HPhone, EMail
+		     , PostCd, Addr, Addr2
+		     , CustCd, MngYN, SignMngYN
+		     , DeptNm, PosNm, Remark
+		     , UseYN, UserTermsTm, ProtectTermsTm
+		     , StampImg, SignImg, ApUserID
+		     , ApDt, UpUserID, UpDt
+		  FROM BAHr 
+		 WHERE 1=1
+		<isNotNull prepend="AND" property="HrCd">
+			<![CDATA[
+				HrCd LIKE '%' + #HrCd# + '%'
+			]]>
+		</isNotNull>
+		<isNotNull prepend="AND" property="HrNm">
+			<![CDATA[
+				HrNm LIKE '%' + #HrNm# + '%'
+			]]>
+		</isNotNull>
+		<isNotNull prepend="AND" property="CustCd">
+			<![CDATA[
+				CustCd = #CustCd#
+			]]>
+		</isNotNull>
+	</select>
+	
+	<select id="bahrDAO.selectBAHr" parameterClass="bahrVO" resultClass="egovMap">
+		SELECT HrCd, HrNm, UserTp
+		     , UserID, Pwd, UserKey
+		     , TelNo, HPhone, EMail
+		     , PostCd, Addr, Addr2
+		     , CustCd, MngYN, SignMngYN
+		     , DeptNm, PosNm, Remark
+		     , UseYN, UserTermsTm, ProtectTermsTm
+		     , StampImg, SignImg, ApUserID
+		     , ApDt, UpUserID, UpDt
+		  FROM BAHr 
+		 WHERE HrCd = #HrCd#
+	</select>
+	
+	<select id="bahrDAO.selectBAHrCust" parameterClass="bahrVO" resultClass="egovMap">
+		SELECT HrCd, HrNm, UserTp
+		     , UserID, Pwd, UserKey
+		     , TelNo, HPhone, EMail
+		     , PostCd, Addr, Addr2
+		     , CustCd, MngYN, SignMngYN
+		     , DeptNm, PosNm, Remark
+		     , UseYN, UserTermsTm, ProtectTermsTm
+		     , StampImg, SignImg, ApUserID
+		     , ApDt, UpUserID, UpDt
+		  FROM BAHr 
+		 WHERE ISNULL(CustCd, '') <![CDATA[<>]]> ''
+		   AND CustCd = #CustCd#
+	</select>
+	
+	<select id="bahrDAO.selectGenHrCd" resultClass="String">
+		SELECT CONVERT(NVARCHAR(8), GETDATE(), 112) + RIGHT(ISNULL(MAX(HrCd), 0) + 101, 2) HrCd
+		  FROM BAHr
+		 WHERE HrCd LIKE CONVERT(NVARCHAR(8), GETDATE(), 112) + '%'
+	</select>
+	
+	<insert id="bahrDAO.insertBAHr" parameterClass="bahrVO">
+		INSERT INTO BAHr(HrCd, HrNm, UserTp
+		    , UserID, Pwd, UserKey
+		    , TelNo, HPhone, EMail
+		    , PostCd, Addr, Addr2
+		    , CustCd, MngYN, SignMngYN
+		    , DeptNm, PosNm, Remark
+		    , UseYN, UserTermsTm, ProtectTermsTm
+		    , StampImg, SignImg, ApUserID
+		    , ApDt, UpUserID, UpDt)
+		VALUES(  #HrCd#, #HrNm#, #UserTp#
+		    , #UserID#, #Pwd#, #UserKey#
+		    , #TelNo#, #HPhone#, #EMail#
+		    , #PostCd#, #Addr#, #Addr2#
+		    , #CustCd#, #MngYN#, #SignMngYN#
+		    , #DeptNm#, #PosNm#, #Remark#
+		    , #UseYN#, #UserTermsTm#, #ProtectTermsTm#
+		    , #StampImg#, #SignImg#, #ApUserID#
+		    , #ApDt#, #UpUserID#, #UpDt#)
+	</insert>
+	
+	<update id="bahrDAO.updateBAHr" parameterClass="bahrVO">
+		UPDATE BAHr SET 
+			  HrCd=#HrCd#, HrNm=#HrNm#, UserTp=#UserTp#
+		    , UserID=#UserID#, Pwd=#Pwd#, UserKey=#UserKey#
+		    , TelNo=#TelNo#, HPhone=#HPhone#, EMail=#EMail#
+		    , PostCd=#PostCd#, Addr=#Addr#, Addr2=#Addr2#
+		    , CustCd=#CustCd#, MngYN=#MngYN#, SignMngYN=#SignMngYN#
+		    , DeptNm=#DeptNm#, PosNm=#PosNm#, Remark=#Remark#
+		    , UseYN=#UseYN#, UserTermsTm=#UserTermsTm#, ProtectTermsTm=#ProtectTermsTm#
+		    , StampImg=#StampImg#, SignImg=#SignImg#
+		    , UpUserID=#UpUserID#, UpDt=#UpDt#
+		WHERE HrCd=#HrCd#
+	</update>
+	
+	<delete id="bahrDAO.deleteBAHr" parameterClass="bahrVO">
+		DELETE FROM BAHr WHERE HrCd = #HrCd#
+	</delete>
+</sqlMap>

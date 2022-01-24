@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ods.mapper.BACmpyMapper">
+	<select id="selectBACmpyList" parameterType="bacmpyVO" resultType="egovMap">
+		SELECT CustCd, CustNm, BizRegNo
+		     , CmpyApNo, ReprHrNm, ReprTelNo
+		     , PostCd, Addr, Addr2
+		     , CBTYN, Remark, UseYN
+		     , StampImg, SignImg, ApUserID
+		     , ApDt, UpUserID, UpDt
+		  FROM BACmpy 
+		 WHERE 1=1
+		 
+		<if test="CustCd != null and CustCd != ''">
+			AND CustCd LIKE '%' + #{CustCd} + '%'
+		</if>
+		<if test="CustNm != null and CustNm != ''">
+			AND CustNm = '%' + #{CustNm} + '%'
+		</if>
+	</select>
+	
+	<select id="selectBACmpy" parameterType="bacmpyVO" resultType="egovMap">
+		SELECT CustCd, CustNm, BizRegNo
+		     , CmpyApNo, ReprHrNm, ReprTelNo
+		     , PostCd, Addr, Addr2
+		     , CBTYN, Remark, UseYN
+		     , StampImg, SignImg, ApUserID
+		     , ApDt, UpUserID, UpDt
+		  FROM BACmpy 
+		 WHERE CustCd = #{CustCd}
+	</select>
+	
+	<select id="selectGenCustCd" resultType="String">
+		SELECT RIGHT('1000001'+MAX(CAST(CustCd AS INT)), 6) CustCd FROM BACmpy
+	</select>
+	
+	<insert id="insertBACmpy" parameterType="bacmpyVO">
+		INSERT INTO BACmpy(CustCd, CustNm, BizRegNo
+		    , CmpyApNo, ReprHrNm, ReprTelNo
+		    , PostCd, Addr, Addr2
+		    , CBTYN, Remark, UseYN
+		    , StampImg, SignImg, ApUserID
+		    , ApDt, UpUserID, UpDt)
+		VALUES(  #{CustCd}, #{CustNm}, #{BizRegNo}
+		    , #{CmpyApNo}, #{ReprHrNm}, #{ReprTelNo}
+		    , #{PostCd}, #{Addr}, #{Addr2}
+		    , #{CBTYN}, #{Remark}, #{UseYN}
+		    , #{StampImg}, #{SignImg}, #{ApUserID}
+		    , #{ApDt}, #{UpUserID}, #{UpDt})
+	</insert>
+	
+	<update id="updateBACmpy" parameterType="bacmpyVO">
+		UPDATE BACmpy SET 
+		      CustCd=#{CustCd}, CustNm=#{CustNm}, BizRegNo=#{BizRegNo}
+		    , CmpyApNo=#{CmpyApNo}, ReprHrNm=#{ReprHrNm}, ReprTelNo=#{ReprTelNo}
+		    , PostCd=#{PostCd}, Addr=#{Addr}, Addr2=#{Addr2}
+		    , CBTYN=#{CBTYN}, Remark=#{Remark}, UseYN=#{UseYN}
+		    , StampImg=#{StampImg}, SignImg=#{SignImg}
+		    , UpUserID=#{UpUserID}, UpDt=#{UpDt}
+		WHERE CustCd=#{CustCd}
+	</update>
+	
+	<delete id="deleteBACmpy" parameterType="bacmpyVO">
+		DELETE FROM BACmpy WHERE CustCd = #{CustCd}
+		DELETE FROM BAHr WHERE CustCd = #{CustCd}
+		DELETE FROM BACertificate WHERE CustCd = #{CustCd}
+	</delete>
+</mapper>

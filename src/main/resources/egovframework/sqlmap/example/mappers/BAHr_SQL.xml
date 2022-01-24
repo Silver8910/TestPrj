@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ods.mapper.BAHrMapper">
+	<select id="selectBAHrList" parameterType="bahrVO" resultType="egovMap">
+		SELECT HrCd, HrNm, UserTp
+		     , UserID, Pwd, UserKey
+		     , TelNo, HPhone, EMail
+		     , PostCd, Addr, Addr2
+		     , CustCd, MngYN, SignMngYN
+		     , DeptNm, PosNm, Remark
+		     , UseYN, UserTermsTm, ProtectTermsTm
+		     , StampImg, SignImg, ApUserID
+		     , ApDt, UpUserID, UpDt
+		  FROM BAHr 
+		 WHERE 1=1
+		
+		<if test="HrCd != null and HrCd != ''">
+			AND HrCd LIKE '%' + #{HrCd} + '%'
+		</if>
+		<if test="HrNm != null and HrNm != ''">
+			AND HrNm = '%' + #{HrNm} + '%'
+		</if>
+	</select>
+	
+	<select id="selectBAHr" parameterType="bahrVO" resultType="egovMap">
+		SELECT HrCd, HrNm, UserTp
+		     , UserID, Pwd, UserKey
+		     , TelNo, HPhone, EMail
+		     , PostCd, Addr, Addr2
+		     , CustCd, MngYN, SignMngYN
+		     , DeptNm, PosNm, Remark
+		     , UseYN, UserTermsTm, ProtectTermsTm
+		     , StampImg, SignImg, ApUserID
+		     , ApDt, UpUserID, UpDt
+		  FROM BAHr 
+		 WHERE HrCd = #{HrCd}
+	</select>
+	
+	<select id="selectBAHrCust" parameterType="bahrVO" resultType="egovMap">
+		SELECT HrCd, HrNm, UserTp
+		     , UserID, Pwd, UserKey
+		     , TelNo, HPhone, EMail
+		     , PostCd, Addr, Addr2
+		     , CustCd, MngYN, SignMngYN
+		     , DeptNm, PosNm, Remark
+		     , UseYN, UserTermsTm, ProtectTermsTm
+		     , StampImg, SignImg, ApUserID
+		     , ApDt, UpUserID, UpDt
+		  FROM BAHr 
+		 WHERE ISNULL(CustCd, '') <![CDATA[<>]]> ''
+		   AND CustCd = #{CustCd}
+	</select>
+	
+	<select id="selectGenHrCd" resultType="String">
+		SELECT CONVERT(NVARCHAR(8), GETDATE(), 112) + RIGHT(ISNULL(MAX(HrCd), 0) + 101, 2) HrCd
+		  FROM BAHr
+		 WHERE HrCd LIKE CONVERT(NVARCHAR(8), GETDATE(), 112) + '%'
+	</select>
+	
+	<insert id="insertBAHr" parameterType="bahrVO">
+		INSERT INTO BAHr(HrCd, HrNm, UserTp
+		    , UserID, Pwd, UserKey
+		    , TelNo, HPhone, EMail
+		    , PostCd, Addr, Addr2
+		    , CustCd, MngYN, SignMngYN
+		    , DeptNm, PosNm, Remark
+		    , UseYN, UserTermsTm, ProtectTermsTm
+		    , StampImg, SignImg, ApUserID
+		    , ApDt, UpUserID, UpDt)
+		VALUES(  #{HrCd}, #{HrNm}, #{UserTp}
+		    , #{UserID}, #{Pwd}, #{UserKey}
+		    , #{TelNo}, #{HPhone}, #{EMail}
+		    , #{PostCd}, #{Addr}, #{Addr2}
+		    , #{CustCd}, #{MngYN}, #{SignMngYN}
+		    , #{DeptNm}, #{PosNm}, #{Remark}
+		    , #{UseYN}, #{UserTermsTm}, #{ProtectTermsTm}
+		    , #{StampImg, jdbcType=NVARCHAR}, #{SignImg, jdbcType=NVARCHAR}, #{ApUserID}
+		    , #{ApDt}, #{UpUserID}, #{UpDt})
+	</insert>
+	
+	<update id="updateBAHr" parameterType="bahrVO">
+		UPDATE BAHr SET 
+			  HrCd=#{HrCd}, HrNm=#{HrNm}, UserTp=#{UserTp}
+		    , UserID=#{UserID}, Pwd=#{Pwd}, UserKey=#{UserKey}
+		    , TelNo=#{TelNo}, HPhone=#{HPhone}, EMail=#{EMail}
+		    , PostCd=#{PostCd}, Addr=#{Addr}, Addr2=#{Addr2}
+		    , CustCd=#{CustCd}, MngYN=#{MngYN}, SignMngYN=#{SignMngYN}
+		    , DeptNm=#{DeptNm}, PosNm=#{PosNm}, Remark=#{Remark}
+		    , UseYN=#{UseYN}, UserTermsTm=#{UserTermsTm}, ProtectTermsTm=#{ProtectTermsTm}
+		    , StampImg=#{StampImg}, SignImg=#{SignImg}
+		    , UpUserID=#{UpUserID}, UpDt=#{UpDt}
+		WHERE HrCd = #{HrCd}
+	</update>
+	
+	<delete id="deleteBAHr" parameterType="bahrVO">
+		DELETE FROM BAHr WHERE HrCd = #{HrCd}
+	</delete>
+</mapper>
